@@ -60,7 +60,7 @@ const Scraper = () => {
 
   const handleSearch = async (searchType: 'product' | 'sellerDropdown' | 'sellerSearch') => {
     setIsLoading(true);
-    const loadingToast = showLoading('Scraping products...');
+    const loadingToast = showLoading('Searching for products...');
 
     try {
       const payload: any = {};
@@ -90,11 +90,11 @@ const Scraper = () => {
         showSuccess(`Found ${data.data?.length || 0} products!`);
       } else {
         dismissToast(loadingToast);
-        showError(data.error || 'Failed to scrape products');
+        showError(data.error || 'Failed to find products');
       }
     } catch (error) {
       dismissToast(loadingToast);
-      showError('Failed to connect to scraper. Make sure your Python server is running.');
+      showError('Failed to connect to the search service. Please try again later.');
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
@@ -104,9 +104,9 @@ const Scraper = () => {
   return (
     <div className="container mx-auto p-6 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Rakuten Product Scraper</h1>
+        <h1 className="text-3xl font-bold mb-2">Luxury Link Group</h1>
         <p className="text-muted-foreground">
-          Search for products or sellers on Rakuten through FromJapan
+          Search for products or sellers from our curated list of stores.
         </p>
       </div>
 
@@ -122,7 +122,7 @@ const Scraper = () => {
             <CardHeader>
               <CardTitle>Search Products</CardTitle>
               <CardDescription>
-                Enter a product name to search for on Rakuten
+                Enter a product name to search
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

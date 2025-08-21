@@ -10,10 +10,10 @@ const Index = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Rakuten Product Scraper
+            Luxury Link Group
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Search and scrape products from Rakuten through FromJapan with ease. 
+            Search and find luxury products from various sellers with ease. 
             Get product details, prices, and seller information automatically.
           </p>
         </div>
@@ -38,7 +38,7 @@ const Index = () => {
               </ul>
               <Link to="/scraper">
                 <Button className="w-full">
-                  Start Scraping
+                  Start Searching
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -90,8 +90,8 @@ const Index = () => {
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                     <span className="text-green-600 font-bold">2</span>
                   </div>
-                  <h3 className="font-semibold mb-1">Scrape Data</h3>
-                  <p className="text-sm text-gray-600">Our scraper collects product information</p>
+                  <h3 className="font-semibold mb-1">Find Data</h3>
+                  <p className="text-sm text-gray-600">Our tool collects product information</p>
                 </div>
                 <div className="text-center">
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
