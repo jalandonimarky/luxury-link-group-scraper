@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Search, Loader2, PlusCircle } from 'lucide-react';
+import { ExternalLink, Search, Loader2 } from 'lucide-react';
 import { showSuccess, showError, showLoading, dismissToast } from '@/utils/toast';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -53,28 +53,10 @@ const Scraper = () => {
   const [results, setResults] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUrl, setSearchUrl] = useState('');
-  const [sellers, setSellers] = useState<Seller[]>(initialSellers);
-  const [newSellerName, setNewSellerName] = useState('');
-  const [newSellerUrl, setNewSellerUrl] = useState('');
+  const [sellers] = useState<Seller[]>(initialSellers);
 
   const starredSellers = sellers.filter(s => s.star);
   const otherSellers = sellers.filter(s => !s.star && s.url);
-
-  const handleAddSeller = () => {
-    if (!newSellerName.trim() || !newSellerUrl.trim()) {
-      showError("Please enter both seller name and URL/ID.");
-      return;
-    }
-    const newSeller = {
-      name: newSellerName,
-      url: newSellerUrl,
-      star: false,
-    };
-    setSellers([...sellers, newSeller]);
-    setNewSellerName('');
-    setNewSellerUrl('');
-    showSuccess(`Seller "${newSellerName}" added to the list!`);
-  };
 
   const handleSearch = async (searchType: 'product' | 'sellerDropdown' | 'sellerSearch') => {
     setIsLoading(true);
@@ -217,42 +199,6 @@ const Scraper = () => {
                   <Search className="mr-2 h-4 w-4" />
                 )}
                 Filter by Seller
-              </Button>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Add New Seller</CardTitle>
-              <CardDescription>
-                Add a new seller to the dropdown list for future use.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="new-seller-name">Seller Name</Label>
-                <Input
-                  id="new-seller-name"
-                  placeholder="e.g., My Favorite Shop"
-                  value={newSellerName}
-                  onChange={(e) => setNewSellerName(e.target.value)}
-                />
-              </div>
-              <div>
-                <Label htmlFor="new-seller-url">Seller URL/ID</Label>
-                <Input
-                  id="new-seller-url"
-                  placeholder="e.g., my-favorite-shop-id"
-                  value={newSellerUrl}
-                  onChange={(e) => setNewSellerUrl(e.target.value)}
-                />
-              </div>
-              <Button 
-                onClick={handleAddSeller} 
-                disabled={!newSellerName.trim() || !newSellerUrl.trim()}
-                className="w-full"
-              >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add Seller to List
               </Button>
             </CardContent>
           </Card>
