@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Search, Loader2 } from 'lucide-react';
 import { showSuccess, showError, showLoading, dismissToast } from '@/utils/toast';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Product {
   "Product Name": string;
@@ -23,6 +24,32 @@ const Scraper = () => {
   const [results, setResults] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUrl, setSearchUrl] = useState('');
+
+  const sellers = [
+    { name: "質ウエダ ★", url: "uedasakae", star: true },
+    { name: "リマルク 楽天市場店 ★", url: "2017style", star: true },
+    { name: "高山質店 ★", url: "takayama78", star: true },
+    { name: "【銀座パリス】 楽天市場店 ★", url: "auc-ginzaparis", star: true },
+    { name: "ブランドラコル ★", url: "aquayuta", star: true },
+    { name: "VINTAGE LOVER PURPOSE ★", url: "purpose-inc", star: true },
+    { name: "ALLU 楽天市場店 ★", url: "allu-r", star: true },
+    { name: "Blumin 楽天市場店 ★", url: "blumin-2", star: true },
+    { name: "HOUBIDOU 心斎橋店 ★", url: "mycollection", star: true },
+    { name: "ブランドショップ リファレンス ★", url: "reference", star: true },
+    { name: "JJcollection ★", url: "jjcollection", star: true },
+    { name: "その他", url: "", star: false }, // Separator
+    { name: "ブランディア 楽天市場店", url: "brandear-store", star: false },
+    { name: "かんてい局名古屋錦三丁目・緑店", url: "kanteikyoku-nishikisan", star: false },
+    { name: "平山質店楽天市場店", url: "hirayama7ten", star: false },
+    { name: "MODESCAPE 楽天市場店", url: "modescape", star: false },
+    { name: "万代Net店", url: "mandai", star: false },
+    { name: "質Shop 天満屋", url: "auc-tenmaya78", star: false },
+    { name: "p.o.s.h. Online Store 楽天市場店", url: "auc-posh", star: false },
+    { name: "質屋かんてい局 楽天市場店", url: "kanteikyoku", star: false }
+  ];
+
+  const starredSellers = sellers.filter(s => s.star);
+  const otherSellers = sellers.filter(s => !s.star && s.url);
 
   const handleSearch = async (searchType: 'product' | 'sellerDropdown' | 'sellerSearch') => {
     setIsLoading(true);
@@ -123,15 +150,42 @@ const Scraper = () => {
             <CardHeader>
               <CardTitle>Filter by Seller</CardTitle>
               <CardDescription>
-                Enter a seller ID to filter products (minimum price: ¥50,000)
+                Select a seller from the list or enter a custom ID (minimum price: ¥50,000)
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="seller-filter">Seller ID</Label>
+                <Label>Select Seller</Label>
+                <Select onValueChange={setSellerFilter} value={sellerFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a seller from the list" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Starred Sellers</SelectLabel>
+                      {starredSellers.map((seller) => (
+                        <SelectItem key={seller.url} value={seller.url}>
+                          {seller.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                    <SelectSeparator />
+                    <SelectGroup>
+                      <SelectLabel>Other Sellers</SelectLabel>
+                      {otherSellers.map((seller) => (
+                        <SelectItem key={seller.url} value={seller.url}>
+                          {seller.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="seller-filter">Or Enter Custom Seller ID</Label>
                 <Input
                   id="seller-filter"
-                  placeholder="e.g., seller123"
+                  placeholder="e.g., custom-seller-id"
                   value={sellerFilter}
                   onChange={(e) => setSellerFilter(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch('sellerDropdown')}
